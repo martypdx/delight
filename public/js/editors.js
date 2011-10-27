@@ -40,7 +40,15 @@ var layout = '!!!\n' +
 '      !{javascript}'
 
 var renderLayout = jadeEngine.compile(layout)  
-	  
+
+editors.beginPreview = function() {
+	editors.hasChanges = true
+	setInterval(function() {
+		if(!editors.hasChanges){ return }
+		editors.showPreview()
+		editors.hasChanges = false
+	}, 250)	
+}
 editors.showPreview = function() {
 	
 	var err
@@ -99,7 +107,7 @@ editors.create = function(name, element, mode) {
 	if(mode) { session.setMode(mode) }
 	
 	editors[name] = editor.session
-	session.on('change', editors.showPreview)
+	session.on('change', function() { editors.hasChanges = true })
 	
 	sharejs.open(name, 'text', function(doc, error) {
 	  if(error) { console.log('share js error', error) }

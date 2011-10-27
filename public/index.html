@@ -56,7 +56,7 @@
 			var json_editor = editors.createJSON($panes.find('.json')[0])
 			var javascript_editor = editors.createJavascript($panes.find('.javascript')[0])
 			
-			editors.showPreview()
+			editors.beginPreview()
 					
 			panes.onresize(function() {
 				jade_editor.resize()
